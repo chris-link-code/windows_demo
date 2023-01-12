@@ -1,9 +1,6 @@
 #include <windows.h>
 
 /**
-https://blog.csdn.net/its4you/article/details/122716846
-https://blog.csdn.net/its4you/article/details/122726939
-https://blog.csdn.net/its4you/article/details/122726963
 如果需要显示中文，编码要选择GBK或GB2312
 */
 

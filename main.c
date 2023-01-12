@@ -8,11 +8,15 @@ https://blog.csdn.net/its4you/article/details/122726939
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
+HINSTANCE hInst;
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
     static TCHAR szClassName[] = TEXT("HelloWin"); //窗口类名
     HWND hwnd; //窗口句柄
     MSG msg; //消息
     WNDCLASS wndclass; //窗口类
+
+    hInst = hInstance;
 
     /**********第1步：注册窗口类**********/
 
@@ -68,9 +72,39 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
     HDC hdc; //设备环境句柄
     PAINTSTRUCT ps;
     RECT rect;
+
+    static HFONT hFont;
+    static HWND hBtn;
+
     switch (message) {
-        //窗口绘制消息
-        case WM_PAINT:
+        //创建逻辑字体
+        case WM_CREATE: {
+            hFont = CreateFont(
+                    -15/*高度*/, -7.5/*宽度*/, 0, 0, 400 /*一般这个值设为400*/,
+                    FALSE/*不带斜体*/, FALSE/*不带下划线*/, FALSE/*不带删除线*/,
+                    DEFAULT_CHARSET, //使用默认字符集
+                    OUT_CHARACTER_PRECIS, CLIP_CHARACTER_PRECIS, //这行参数不用管
+                    DEFAULT_QUALITY, //默认输出质量
+                    FF_DONTCARE, //不指定字体族*/
+                    TEXT("微软雅黑") //字体名
+            );
+            //创建按钮控件
+            hBtn = CreateWindow(
+                    TEXT("button"), //按钮控件的类名
+                    TEXT("这是按钮"),
+                    WS_CHILD | WS_VISIBLE | WS_BORDER | BS_FLAT/*扁平样式*/,
+                    220 /*X坐标*/,
+                    20 /*Y坐标*/,
+                    150 /*宽度*/,
+                    50/*高度*/,
+                    hwnd, (HMENU) 2 /*控件唯一标识符*/, hInst, NULL
+            );
+            SendMessage(hBtn, WM_SETFONT, (WPARAM) hFont, 0);//设置按钮字体
+            break;
+        }
+
+            //窗口绘制消息
+        case WM_PAINT: {
             hdc = BeginPaint(hwnd, &ps);
             GetClientRect(hwnd, &rect);
             DrawText(
@@ -83,11 +117,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
             EndPaint(hwnd, &ps);
             return 0;
+        }
 
-        //窗口销毁消息
-        case WM_DESTROY:
+            //窗口销毁消息
+        case WM_DESTROY: {
             PostQuitMessage(0);
             return 0;
+        }
     }
 
     return DefWindowProc(hwnd, message, wParam, lParam);

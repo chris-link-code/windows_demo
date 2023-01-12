@@ -80,12 +80,19 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
         //创建逻辑字体
         case WM_CREATE: {
             hFont = CreateFont(
-                    -15/*高度*/, -7.5/*宽度*/, 0, 0, 400 /*一般这个值设为400*/,
-                    FALSE/*不带斜体*/, FALSE/*不带下划线*/, FALSE/*不带删除线*/,
+                    -15, //高度
+                    -7.5, //宽度
+                    0,
+                    0,
+                    400, //一般这个值设为400
+                    FALSE,//不带斜体
+                    FALSE,//不带下划线
+                    FALSE,//不带删除线
                     DEFAULT_CHARSET, //使用默认字符集
-                    OUT_CHARACTER_PRECIS, CLIP_CHARACTER_PRECIS, //这行参数不用管
+                    OUT_CHARACTER_PRECIS,
+                    CLIP_CHARACTER_PRECIS, //这行参数不用管
                     DEFAULT_QUALITY, //默认输出质量
-                    FF_DONTCARE, //不指定字体族*/
+                    FF_DONTCARE, //不指定字体族
                     TEXT("微软雅黑") //字体名
             );
             //创建按钮控件

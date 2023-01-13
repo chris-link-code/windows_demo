@@ -9,7 +9,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HINSTANCE hInst;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine, int iCmdShow) {
-    static TCHAR szClassName[] = TEXT("HelloWin"); //窗口类名
+    static TCHAR szClassName[] = TEXT("Hello Window"); //窗口类名
     HWND hwnd; //窗口句柄
     MSG msg; //消息
     WNDCLASS wndclass; //窗口类

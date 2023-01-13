@@ -7,8 +7,8 @@ https://blog.csdn.net/its4you/article/details/122716846
 https://blog.csdn.net/its4you/article/details/122726939
 https://blog.csdn.net/its4you/article/details/122726963
 
-https://codesteps.com/2014/07/14/win32-programming-how-to-create-a-simple-gui-graphical-user-interface-based-application-part-1/#:~:text=Win32%20API%20provides%20a%20vast%20number%20of%20API,to%20accept%20user%20input%20and%20display%20the%20output.
-
+https://codesteps.com/2014/07/14/win32-programming-how-to-create-a-simple-gui-graphical-user-interface-based-application-part-1/
+https://codesteps.com//2014/07/18/win32-programming-how-to-create-a-simple-gui-graphical-user-interface-based-application-part-2/
 
 
 https://www.jb51.net/article/36465.htm

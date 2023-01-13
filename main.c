@@ -64,7 +64,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
             NULL);*/
 
     if (hwnd == NULL) {
-        // ¥Ú”°¥ÌŒÛ
+        // ¥Ú”°¥ÌŒÛ£¨0x57f£¨Cannot find window
         printf("0x%x\n", GetLastError());
     }
 

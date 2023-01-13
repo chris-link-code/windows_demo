@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <windows.h>
 
 /**
@@ -38,7 +39,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
     hwnd = CreateWindow(
             szClassName, //窗口类的名字
             TEXT("window"), //窗口标题（出现在标题栏）
-            WS_OVERLAPPEDWINDOW, //窗口风格
+            WS_OVERLAPPEDWINDOW | WS_VISIBLE, //窗口风格
             CW_USEDEFAULT, //初始化时x轴的位置
             CW_USEDEFAULT, //初始化时y轴的位置
             600, //窗口宽度
@@ -48,6 +49,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR szCmdLine,
             hInstance, //当前窗口的句柄
             NULL //不使用该值
     );
+
+    /*hwnd = CreateWindow(
+            "",
+            "My first GUI window",
+            WS_OVERLAPPEDWINDOW | WS_VISIBLE,
+            100,
+            100,
+            200,
+            200,
+            NULL,
+            NULL,
+            NULL,
+            NULL);*/
+
+    if (hwnd == NULL) {
+        // 打印错误
+        printf("0x%x\n", GetLastError());
+    }
 
     //显示窗口
     ShowWindow(hwnd, iCmdShow);
@@ -102,7 +121,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
                     20 /*Y坐标*/,
                     150 /*宽度*/,
                     50/*高度*/,
-                    hwnd, (HMENU) 2 /*控件唯一标识符*/, hInst, NULL
+                    hwnd, (HMENU) 2 /*控件唯一标识符*/,
+                    hInst,
+                    NULL
             );
             SendMessage(hBtn, WM_SETFONT, (WPARAM) hFont, 0);//设置按钮字体
             break;

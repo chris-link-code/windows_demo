@@ -9,6 +9,7 @@ Windows API,也称为Win32 API、Windows桌面API和Windows Classic API,
 https://learn.microsoft.com/zh-cn/windows/win32/
 https://learn.microsoft.com/zh-cn/windows/win32/windows-application-ui-development
 https://learn.microsoft.com/zh-cn/windows/win32/apiindex/windows-api-list
+https://learn.microsoft.com/zh-cn/windows/win32/apiindex/windows-api-list
 
 微软官方示例代码仓库
 https://github.com/Microsoft/Windows-classic-samples
@@ -24,3 +25,5 @@ https://codesteps.com//2014/07/18/win32-programming-how-to-create-a-simple-gui-g
 https://www.jb51.net/article/36465.htm
 
 https://blog.csdn.net/farmwang/article/details/50603608
+
+https://zhuanlan.zhihu.com/p/494033858

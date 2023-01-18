@@ -5,6 +5,14 @@ Windows API,也称为Win32 API、Windows桌面API和Windows Classic API,
 相比于GTK，效率高，启动快，占用CPU少，只不过颜值和功能丰富度没有GTK高
 也可以采用SDL2
 
+微软官方文档
+https://learn.microsoft.com/zh-cn/windows/win32/
+https://learn.microsoft.com/zh-cn/windows/win32/windows-application-ui-development
+https://learn.microsoft.com/zh-cn/windows/win32/apiindex/windows-api-list
+
+微软官方示例代码仓库
+https://github.com/Microsoft/Windows-classic-samples
+
 https://blog.csdn.net/its4you/article/details/122716846
 https://blog.csdn.net/its4you/article/details/122726939
 https://blog.csdn.net/its4you/article/details/122726963

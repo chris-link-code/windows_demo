@@ -1,142 +1,77 @@
-//
-// Microsoft official demo
-// https://learn.microsoft.com/zh-cn/cpp/windows/walkthrough-creating-windows-desktop-applications-cpp
-// Created by chris on 2023/1/18.
-//
-
-// HelloWindowsDesktop.cpp
-// compile with: /D_UNICODE /DUNICODE /DWIN32 /D_WINDOWS /c
+/*
+ * https://learn.microsoft.com/zh-cn/windows/win32/learnwin32/windows-hello-world-sample
+ * https://github.com/microsoft/Windows-classic-samples/blob/main/Samples/Win7Samples/begin/LearnWin32/HelloWorld/cpp/main.cpp
+ */
 
 #include <windows.h>
-#include <string.h>
-#include <tchar.h>
 
-// Global variables
+#ifndef UNICODE
+#define UNICODE
+#endif
 
-// The main window class name.
-static TCHAR szWindowClass[] = _T("DesktopApp");
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-// The string that appears in the application's title bar.
-static TCHAR szTitle[] = _T("Windows Desktop Guided Tour Application");
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow) {
+    // Register the window class.
+    const wchar_t CLASS_NAME[] = L"Sample Window Class";
 
-// Stored instance handle for use in Win32 API calls such as FindResource
-HINSTANCE hInst;
+    WNDCLASS wc = {};
 
-// Forward declarations of functions included in this code module:
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+    wc.lpfnWndProc = WindowProc;
+    wc.hInstance = hInstance;
+    wc.lpszClassName = CLASS_NAME;
 
-int WINAPI WinMain(
-        _In_ HINSTANCE hInstance,
-        _In_opt_ HINSTANCE hPrevInstance,
-        _In_ LPSTR lpCmdLine,
-        _In_ int nCmdShow
-) {
-    WNDCLASSEX wcex;
+    RegisterClass(&wc);
 
-    wcex.cbSize = sizeof(WNDCLASSEX);
-    wcex.style = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc = WndProc;
-    wcex.cbClsExtra = 0;
-    wcex.cbWndExtra = 0;
-    wcex.hInstance = hInstance;
-    wcex.hIcon = LoadIcon(wcex.hInstance, IDI_APPLICATION);
-    wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wcex.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
-    wcex.lpszMenuName = NULL;
-    wcex.lpszClassName = szWindowClass;
-    wcex.hIconSm = LoadIcon(wcex.hInstance, IDI_APPLICATION);
+    // Create the window.
 
-    if (!RegisterClassEx(&wcex)) {
-        MessageBox(NULL,
-                   _T("Call to RegisterClassEx failed!"),
-                   _T("Windows Desktop Guided Tour"),
-                   0);
-        return 1;
-    }
+    HWND hwnd = CreateWindowEx(
+            0,                              // Optional window styles.
+            CLASS_NAME,                     // Window class
+            L"Learn to Program Windows",    // Window text
+            WS_OVERLAPPEDWINDOW,            // Window style
 
-    // Store instance handle in our global variable
-    hInst = hInstance;
+            // Size and position
+            CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 
-    // The parameters to CreateWindowEx explained:
-    // WS_EX_OVERLAPPEDWINDOW : An optional extended window style.
-    // szWindowClass: the name of the application
-    // szTitle: the text that appears in the title bar
-    // WS_OVERLAPPEDWINDOW: the type of window to create
-    // CW_USEDEFAULT, CW_USEDEFAULT: initial position (x, y)
-    // 500, 100: initial size (width, length)
-    // NULL: the parent of this window
-    // NULL: this application does not have a menu bar
-    // hInstance: the first parameter from WinMain
-    // NULL: not used in this application
-    HWND hWnd = CreateWindowEx(
-            WS_EX_OVERLAPPEDWINDOW,
-            szWindowClass,
-            szTitle,
-            WS_OVERLAPPEDWINDOW,
-            CW_USEDEFAULT, CW_USEDEFAULT,
-            500, 100,
-            NULL,
-            NULL,
-            hInstance,
-            NULL
+            NULL,       // Parent window
+            NULL,       // Menu
+            hInstance,  // Instance handle
+            NULL        // Additional application data
     );
 
-    if (!hWnd) {
-        MessageBox(NULL,
-                   _T("Call to CreateWindow failed!"),
-                   _T("Windows Desktop Guided Tour"),
-                   0);
-        return 1;
+    if (hwnd == NULL) {
+        return 0;
     }
 
-    // The parameters to ShowWindow explained:
-    // hWnd: the value returned from CreateWindow
-    // nCmdShow: the fourth parameter from WinMain
-    ShowWindow(hWnd, nCmdShow);
-    UpdateWindow(hWnd);
+    ShowWindow(hwnd, nCmdShow);
 
-    // Main message loop:
-    MSG msg;
+    // Run the message loop.
+    MSG msg = {};
     while (GetMessage(&msg, NULL, 0, 0)) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
-    return (int) msg.wParam;
+
+    return 0;
 }
 
-//  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  PURPOSE:  Processes messages for the main window.
-//
-//  WM_PAINT    - Paint the main window
-//  WM_DESTROY  - post a quit message and return
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-    PAINTSTRUCT ps;
-    HDC hdc;
-    TCHAR greeting[] = _T("Hello, Windows desktop!");
-
-    switch (message) {
-        case WM_PAINT: {
-            hdc = BeginPaint(hWnd, &ps);
-
-            // Here your application is laid out.
-            // For this introduction, we just print out "Hello, Windows desktop!"
-            // in the top left corner.
-            TextOut(hdc,
-                    5, 5,
-                    greeting, _tcslen(greeting));
-            // End application-specific layout section.
-
-            EndPaint(hWnd, &ps);
-            break;
-        }
-        case WM_DESTROY: {
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+    switch (uMsg) {
+        case WM_DESTROY:
             PostQuitMessage(0);
-            break;
+            return 0;
+
+        case WM_PAINT: {
+            PAINTSTRUCT ps;
+            HDC hdc = BeginPaint(hwnd, &ps);
+
+            // All painting occurs here, between BeginPaint and EndPaint.
+            FillRect(hdc, &ps.rcPaint, (HBRUSH) (COLOR_WINDOW + 1));
+            EndPaint(hwnd, &ps);
         }
-        default: {
-            return DefWindowProc(hWnd, message, wParam, lParam);
-        }
+            return 0;
     }
-    return 0;
+
+    return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }

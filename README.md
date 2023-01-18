@@ -1,8 +1,9 @@
 # 纯C语言windows窗口程序，调用系统库
-windows api
-Win32
 
+Windows API,也称为Win32 API、Windows桌面API和Windows Classic API,
+是用于创建Windows应用程序的基于C语言的框架
 相比于GTK，效率高，启动快，占用CPU少，只不过颜值和功能丰富度没有GTK高
+也可以采用SDL2
 
 https://blog.csdn.net/its4you/article/details/122716846
 https://blog.csdn.net/its4you/article/details/122726939

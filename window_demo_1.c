@@ -3,15 +3,26 @@
  * https://github.com/microsoft/Windows-classic-samples/blob/main/Samples/Win7Samples/begin/LearnWin32/HelloWorld/cpp/main.cpp
  */
 
-#include <windows.h>
+//TODO 启动后会转圈圈，有待优化
 
 #ifndef UNICODE
 #define UNICODE
 #endif
 
+#include <windows.h>
+
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow) {
+int WINAPI WinMain(
+        _In_ HINSTANCE hInstance,
+        _In_opt_ HINSTANCE hPrevInstance,
+        _In_ LPSTR lpCmdLine,
+        _In_ int nCmdShow
+//        HINSTANCE hInstance,
+//        HINSTANCE hPrevInstance,
+//        PWSTR pCmdLine,
+//        int nCmdShow
+) {
     // Register the window class.
     const wchar_t CLASS_NAME[] = L"Sample Window Class";
 
@@ -30,10 +41,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
             CLASS_NAME,                     // Window class
             L"Learn to Program Windows",    // Window text
             WS_OVERLAPPEDWINDOW,            // Window style
-
             // Size and position
-            CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-
+            CW_USEDEFAULT,
+            CW_USEDEFAULT,
+            600, //CW_USEDEFAULT
+            400, //CW_USEDEFAULT
             NULL,       // Parent window
             NULL,       // Menu
             hInstance,  // Instance handle
@@ -47,8 +59,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
     ShowWindow(hwnd, nCmdShow);
 
     // Run the message loop.
+
     MSG msg = {};
-    while (GetMessage(&msg, NULL, 0, 0)) {
+    while (GetMessage(&msg, NULL, 0, 0) > 0) {
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
@@ -67,11 +80,13 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             HDC hdc = BeginPaint(hwnd, &ps);
 
             // All painting occurs here, between BeginPaint and EndPaint.
+
             FillRect(hdc, &ps.rcPaint, (HBRUSH) (COLOR_WINDOW + 1));
+
             EndPaint(hwnd, &ps);
         }
             return 0;
-    }
 
+    }
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }

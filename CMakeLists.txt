@@ -7,5 +7,5 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} -mwindows)
 
 #add_executable(windows_demo main.c)
-add_executable(windows_demo window_demo_1.c)
-#add_executable(windows_demo window_demo_2.c)
+#add_executable(windows_demo window_demo_1.c)
+add_executable(windows_demo window_demo_2.c)

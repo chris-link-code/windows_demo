@@ -74,7 +74,7 @@ int WINAPI WinMain(
             szTitle,
             WS_OVERLAPPEDWINDOW,
             CW_USEDEFAULT, CW_USEDEFAULT,
-            500, 100,
+            600, 400,
             NULL,
             NULL,
             hInstance,
@@ -123,8 +123,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             // For this introduction, we just print out "Hello, Windows desktop!"
             // in the top left corner.
             TextOut(hdc,
-                    5, 5,
-                    greeting, _tcslen(greeting));
+                    5,
+                    5,
+                    greeting,
+                    _tcslen(greeting));
             // End application-specific layout section.
 
             EndPaint(hWnd, &ps);

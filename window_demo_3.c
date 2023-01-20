@@ -138,6 +138,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             EndPaint(hWnd, &ps);
             break;
         }
+        //退出提示
         //https://learn.microsoft.com/zh-cn/windows/win32/learnwin32/closing-the-window
         case WM_CLOSE: {
             if (MessageBox(hWnd, "Are you really quit?", "Application", MB_OKCANCEL) == IDOK) {
@@ -146,6 +147,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             // Else: User canceled. Do nothing.
             return 0;
         }
+        //退出不提示
         case WM_DESTROY: {
             PostQuitMessage(0);
             break;

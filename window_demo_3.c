@@ -140,7 +140,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         }
         //https://learn.microsoft.com/zh-cn/windows/win32/learnwin32/closing-the-window
         case WM_CLOSE: {
-            if (MessageBox(hWnd, "Really quit?", "My application", MB_OKCANCEL) == IDOK) {
+            if (MessageBox(hWnd, "Are you really quit?", "Application", MB_OKCANCEL) == IDOK) {
                 DestroyWindow(hWnd);
             }
             // Else: User canceled. Do nothing.

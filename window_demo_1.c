@@ -13,6 +13,7 @@
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+//基于 Windows 的图形应用程序的用户提供的入口点
 int WINAPI WinMain(
         _In_ HINSTANCE hInstance,
         _In_opt_ HINSTANCE hPrevInstance,

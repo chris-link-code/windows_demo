@@ -25,6 +25,7 @@ HINSTANCE hInst;
 // Forward declarations of functions included in this code module:
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
+//基于 Windows 的图形应用程序的用户提供的入口点
 int WINAPI WinMain(
         _In_ HINSTANCE hInstance,
         _In_opt_ HINSTANCE hPrevInstance,

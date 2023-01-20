@@ -148,10 +148,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             return 0;
         }
         //退出不提示
-        case WM_DESTROY: {
+        /*case WM_DESTROY: {
             PostQuitMessage(0);
             break;
-        }
+        }*/
         default: {
             return DefWindowProc(hWnd, message, wParam, lParam);
         }

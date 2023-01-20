@@ -36,6 +36,9 @@ int WINAPI WinMain(
 ) {
     WNDCLASSEX wcex;
 
+    //https://learn.microsoft.com/zh-cn/windows/win32/api/winuser/nf-winuser-showwindow
+    //最大化窗口
+    nCmdShow = 3;
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
     wcex.lpfnWndProc = WndProc;

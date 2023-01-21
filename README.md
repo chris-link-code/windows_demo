@@ -7,6 +7,7 @@ Windows API,也称为Win32 API、Windows桌面API和Windows Classic API,
 
 微软官方文档
 https://learn.microsoft.com/zh-cn/windows/win32/
+https://learn.microsoft.com/zh-cn/windows/win32/controls/individual-control-info
 https://learn.microsoft.com/zh-cn/windows/win32/windows-application-ui-development
 https://learn.microsoft.com/zh-cn/windows/win32/apiindex/windows-api-list
 

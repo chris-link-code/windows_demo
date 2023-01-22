@@ -78,6 +78,7 @@ int WINAPI WinMain(
     // NULL: this application does not have a menu bar
     // hInstance: the first parameter from WinMain
     // NULL: not used in this application
+    //创造窗口
     HWND hWnd = CreateWindowEx(
             WS_EX_OVERLAPPEDWINDOW,
             szWindowClass,
@@ -90,6 +91,20 @@ int WINAPI WinMain(
             hInstance,
             NULL
     );
+
+    //创造按钮
+    HWND button = CreateWindow(
+            "BUTTON",  // Predefined class; Unicode assumed
+            "OK",      // Button text
+            WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,  // Styles
+            600,         // x position
+            400,         // y position
+            60,        // Button width
+            40,        // Button height
+            hWnd,     // Parent window
+            NULL,       // No menu.
+            (HINSTANCE) GetWindowLongPtr(hWnd, GWLP_HINSTANCE),
+            NULL);      // Pointer not needed.
 
     //DisplayConfirmSaveAsMessageBox();
     DisplayMyMessage(hInstance, hWnd, lpCmdLine);

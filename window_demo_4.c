@@ -27,6 +27,8 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 int DisplayConfirmSaveAsMessageBox();
 
+LRESULT DisplayMyMessage(HINSTANCE hinst, HWND hwndOwner, LPSTR lpszMessage);
+
 //https://learn.microsoft.com/zh-cn/windows/win32/api/winbase/nf-winbase-winmain
 //https://learn.microsoft.com/zh-cn/windows/win32/learnwin32/winmain--the-application-entry-point
 //基于 Windows 的图形应用程序的用户提供的入口点
@@ -62,8 +64,6 @@ int WINAPI WinMain(
         return 1;
     }
 
-    DisplayConfirmSaveAsMessageBox();
-
     // Store instance handle in our global variable
     hInst = hInstance;
 
@@ -91,6 +91,9 @@ int WINAPI WinMain(
             NULL
     );
 
+    //DisplayConfirmSaveAsMessageBox();
+    DisplayMyMessage(hInstance, hWnd, lpCmdLine);
+
     if (!hWnd) {
         MessageBox(NULL,
                    _T("Call to CreateWindow failed!"),
@@ -111,6 +114,7 @@ int WINAPI WinMain(
         TranslateMessage(&msg);
         DispatchMessage(&msg);
     }
+
     return (int) msg.wParam;
 }
 
@@ -142,20 +146,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             EndPaint(hWnd, &ps);
             break;
         }
-        //退出提示
-        //https://learn.microsoft.com/zh-cn/windows/win32/learnwin32/closing-the-window
-        case WM_CLOSE: {
-            if (MessageBox(hWnd, "Are you really quit?", "Application", MB_OKCANCEL) == IDOK) {
-                DestroyWindow(hWnd);
-            }
-            // Else: User canceled. Do nothing.
-            return 0;
-        }
-        //退出不提示
-        /*case WM_DESTROY: {
+            //退出提示
+            //https://learn.microsoft.com/zh-cn/windows/win32/learnwin32/closing-the-window
+            /*case WM_CLOSE: {
+                if (MessageBox(hWnd, "Are you really quit?", "Application", MB_OKCANCEL) == IDOK) {
+                    DestroyWindow(hWnd);
+                }
+                // Else: User canceled. Do nothing.
+                return 0;
+            }*/
+            //退出不提示
+        case WM_DESTROY: {
             PostQuitMessage(0);
             break;
-        }*/
+        }
         default: {
             return DefWindowProc(hWnd, message, wParam, lParam);
         }
@@ -165,8 +169,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 
 //显示消息框
 //https://learn.microsoft.com/zh-cn/windows/win32/dlgbox/using-dialog-boxes
-int DisplayConfirmSaveAsMessageBox()
-{
+int DisplayConfirmSaveAsMessageBox() {
     int msgboxID = MessageBox(
             NULL,
             "temp.txt already exists.\nDo you want to replace it?",
@@ -174,10 +177,122 @@ int DisplayConfirmSaveAsMessageBox()
             MB_ICONEXCLAMATION | MB_YESNO
     );
 
-    if (msgboxID == IDYES)
-    {
+    if (msgboxID == IDYES) {
         // TODO: add code
     }
 
     return msgboxID;
+}
+
+#define ID_HELP 150
+#define ID_TEXT 200
+
+LPWORD lpwAlign(LPWORD lpIn) {
+    LPWORD ul;
+    ul = lpIn;
+    ul++;
+    return ul;
+}
+
+LRESULT DisplayMyMessage(HINSTANCE hinst, HWND hwndOwner, LPSTR lpszMessage) {
+    HGLOBAL hgbl;
+    LPDLGTEMPLATE lpdt;
+    LPDLGITEMTEMPLATE lpdit;
+    LPWORD lpw;
+    LPWSTR lpwsz;
+    LRESULT ret;
+    int nchar;
+
+    hgbl = GlobalAlloc(GMEM_ZEROINIT, 1024);
+    if (!hgbl)
+        return -1;
+
+    lpdt = (LPDLGTEMPLATE) GlobalLock(hgbl);
+
+    // Define a dialog box.
+
+    lpdt->style = WS_POPUP | WS_BORDER | WS_SYSMENU | DS_MODALFRAME | WS_CAPTION;
+    lpdt->cdit = 3;         // Number of controls
+    lpdt->x = 10;
+    lpdt->y = 10;
+    lpdt->cx = 100;
+    lpdt->cy = 100;
+
+    lpw = (LPWORD) (lpdt + 1);
+    *lpw++ = 0;             // No menu
+    *lpw++ = 0;             // Predefined dialog box class (by default)
+
+    lpwsz = (LPWSTR) lpw;
+    nchar = 1 + MultiByteToWideChar(CP_ACP, 0, "My Dialog", -1, lpwsz, 50);
+    lpw += nchar;
+
+    //-----------------------
+    // Define an OK button.
+    //-----------------------
+    lpw = lpwAlign(lpw);    // Align DLGITEMTEMPLATE on DWORD boundary
+    lpdit = (LPDLGITEMTEMPLATE) lpw;
+    lpdit->x = 10;
+    lpdit->y = 70;
+    lpdit->cx = 80;
+    lpdit->cy = 20;
+    lpdit->id = IDOK;       // OK button identifier
+    lpdit->style = WS_CHILD | WS_VISIBLE | BS_DEFPUSHBUTTON;
+
+    lpw = (LPWORD) (lpdit + 1);
+    *lpw++ = 0xFFFF;
+    *lpw++ = 0x0080;        // Button class
+
+    lpwsz = (LPWSTR) lpw;
+    nchar = 1 + MultiByteToWideChar(CP_ACP, 0, "OK", -1, lpwsz, 50);
+    lpw += nchar;
+    *lpw++ = 0;             // No creation data
+
+    //-----------------------
+    // Define a Help button.
+    //-----------------------
+    lpw = lpwAlign(lpw);    // Align DLGITEMTEMPLATE on DWORD boundary
+    lpdit = (LPDLGITEMTEMPLATE) lpw;
+    lpdit->x = 55;
+    lpdit->y = 10;
+    lpdit->cx = 40;
+    lpdit->cy = 20;
+    lpdit->id = ID_HELP;    // Help button identifier
+    lpdit->style = WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON;
+
+    lpw = (LPWORD) (lpdit + 1);
+    *lpw++ = 0xFFFF;
+    *lpw++ = 0x0080;        // Button class atom
+
+    lpwsz = (LPWSTR) lpw;
+    nchar = 1 + MultiByteToWideChar(CP_ACP, 0, "Help", -1, lpwsz, 50);
+    lpw += nchar;
+    *lpw++ = 0;             // No creation data
+
+    //-----------------------
+    // Define a static text control.
+    //-----------------------
+    lpw = lpwAlign(lpw);    // Align DLGITEMTEMPLATE on DWORD boundary
+    lpdit = (LPDLGITEMTEMPLATE) lpw;
+    lpdit->x = 10;
+    lpdit->y = 10;
+    lpdit->cx = 40;
+    lpdit->cy = 20;
+    lpdit->id = ID_TEXT;    // Text identifier
+    lpdit->style = WS_CHILD | WS_VISIBLE | SS_LEFT;
+
+    lpw = (LPWORD) (lpdit + 1);
+    *lpw++ = 0xFFFF;
+    *lpw++ = 0x0082;        // Static class
+
+    for (lpwsz = (LPWSTR) lpw; *lpwsz++ = (WCHAR) *lpszMessage++;);
+    lpw = (LPWORD) lpwsz;
+    *lpw++ = 0;             // No creation data
+
+    GlobalUnlock(hgbl);
+    ret = DialogBoxIndirect(hinst,
+                            (LPDLGTEMPLATE) hgbl,
+                            hwndOwner,
+                            NULL);
+    GlobalFree(hgbl);
+    return ret;
 }

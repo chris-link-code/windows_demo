@@ -13,6 +13,7 @@ https://learn.microsoft.com/zh-cn/windows/win32/apiindex/windows-api-list
 
 微软官方示例代码仓库
 https://github.com/Microsoft/Windows-classic-samples
+https://github.com/microsoft/Windows-classic-samples/tree/main/Samples/Win7Samples/begin/LearnWin32
 
 https://blog.csdn.net/its4you/article/details/122716846
 https://blog.csdn.net/its4you/article/details/122726939

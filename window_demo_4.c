@@ -10,6 +10,7 @@
 #include <windows.h>
 #include <string.h>
 #include <tchar.h>
+#include "win.h"
 
 // Global variables
 
@@ -106,8 +107,13 @@ int WINAPI WinMain(
             (HINSTANCE) GetWindowLongPtr(hWnd, GWLP_HINSTANCE),
             NULL);      // Pointer not needed.
 
+
+    //改变按钮文本
+    //https://learn.microsoft.com/zh-cn/windows/win32/controls/create-a-command-link
+    //SendMessage(button, WM_SETTEXT, 0, (LPARAM) "note");
+
     //DisplayConfirmSaveAsMessageBox();
-    DisplayMyMessage(hInstance, hWnd, lpCmdLine);
+    //DisplayMyMessage(hInstance, hWnd, lpCmdLine);
 
     if (!hWnd) {
         MessageBox(NULL,
@@ -132,6 +138,7 @@ int WINAPI WinMain(
 
     return (int) msg.wParam;
 }
+
 
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
 //

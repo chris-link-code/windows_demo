@@ -5,7 +5,7 @@
 #include <math.h>
 #include <windows.h>
 #include <Windows.h>
-using namespace std;
+//using namespace std;
 
 HPEN  getPen(int iPEN_STYLE, int iPEN_SIZE, int iCOLORREF);
 BOOL  SetPoint(HDC hDC, HPEN hPen, COORD PNT);
@@ -143,7 +143,7 @@ void gotoxy(int x, int y)
 void outtextxy(int x, int y, char * text)
 {
 	gotoxy(x/8,y/12);
-	std::cout << text;
+//	std::cout << text;
 }
 
 void clrscr()
@@ -206,17 +206,15 @@ COORD setCordScale(COORD POS, RECT pRECT)
         double CX = (pRECT.right - pRECT.left)/nCOLS;
         double CY = (pRECT.bottom - pRECT.top)/nROWS;
  
-        //При текстовом режиме(text mode) экран  делится  на  ячейки
-		//(80  или 40 колонок в ширину и 25 строк в высоту)
         POS.X *= CX;
         POS.Y *= CY;
  
-        int xBORDER = GetSystemMetrics(SM_CXBORDER);//Ширина границы окна
-        int yBORDER = GetSystemMetrics(SM_CYMENU);  //Высота заголовка окна ~= высоте строк меню
-        int xDRAG       = GetSystemMetrics(SM_CXDRAG);  //Число пикселей на гориз дрожение мыши
-        int yDRAG       = GetSystemMetrics(SM_CYDRAG);  //Число пикселей на вертик дрожение мыши
+        int xBORDER = GetSystemMetrics(SM_CXBORDER);
+        int yBORDER = GetSystemMetrics(SM_CYMENU);
+        int xDRAG       = GetSystemMetrics(SM_CXDRAG);
+        int yDRAG       = GetSystemMetrics(SM_CYDRAG);
  
-        POS.X += xBORDER + xDRAG;//Ширина границы окна + число пикселей на дрожение мыши
+        POS.X += xBORDER + xDRAG;
         POS.Y += yBORDER + yDRAG;
         return POS;
 }
